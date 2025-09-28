@@ -40,9 +40,14 @@ python main.py --mode train
 ### 2. 学習済みエージェントのデモ
 
 学習済みの重みを使って、エージェントの走行を動画で確認します。
-
+- 報酬関数のclipping無し
 ```bash
-python main.py --mode demo --load_model best_ppo_1
+python main.py --mode demo --model_dir best_ppo_1
+```
+
+- 報酬関数のclipping有り
+```bash
+python main.py --mode demo --model_dir best_ppo_2
 ```
 
 ## 学習結果
