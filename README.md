@@ -18,8 +18,8 @@
 
 1.  リポジトリをクローンします。
     ```bash
-    git clone [https://github.com/lumenyuto/Carracing-PPO.git](https://github.com/lumenyuto/Carracing-PPO.git)
-    cd Carracing-PPO
+    git clone [https://github.com/lumenyuto/RLs2025-final-assignment.git](https://github.com/lumenyuto/RLs2025-final-assignment.git)
+    cd RLs2025-final-assignment
     ```
 
 2.  必要なライブラリをインストールします。
