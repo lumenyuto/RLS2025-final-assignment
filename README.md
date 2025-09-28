@@ -22,7 +22,7 @@
 
 1.  リポジトリをクローンします。
     ```bash
-    git clone [https://github.com/your-username/PPO-CarRacing-GradCAM.git](https://github.com/your-username/PPO-CarRacing-GradCAM.git)
+    git clone [https://github.com/lumenyuto/CarRacing-PPO.git](https://github.com/lumenyuto/CarRacing-PPO.git)
     cd PPO-CarRacing-GradCAM
     ```
 
