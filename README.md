@@ -60,7 +60,7 @@ python visualize_cam.py --model_dir 'model_ppo'
 ## 学習結果
 
 ### 学習曲線
-(https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/best_ppo_3.png?raw=true)
+![学習曲線](https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/best_ppo_3.png?raw=true)
 
 ### エージェントの走行動画
 
