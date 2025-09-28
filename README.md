@@ -1,4 +1,11 @@
 # 深層強化学習Summer2025最終課題
+# PPO-CarRacing: 深層強化学習エージェントとGrad-CAMによる判断根拠の可視化
+
+![Grad-CAM Visualization](https://i.imgur.com/your-image-url.gif)  ## 概要
+
+このプロジェクトでは、深層強化学習アルゴリズム **PPO (Proximal Policy Optimization)** を用いて、Gymnasiumの**CarRacing-v3**環境を攻略するエージェントを学習させます。
+
+さらに、学習済みエージェントが画像の**どこに注目して**行動を決定しているのかを、**Grad-CAM**を用いて可視化し、その判断根拠を分析します。
 ## 概要
 - 「Gymnasium Carracing-v3」上でPPOを実装しました。
 - ハイパーパラメータや報酬関数の調整により、完璧な走りではないものの、スコア900超え（コースを1周完走できる程度の性能）のモデルを作成することに成功しました。
