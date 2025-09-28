@@ -42,7 +42,7 @@ python main.py --mode train
 学習済みの重みを使って、エージェントの走行を動画で確認します。
 
 ```bash
-python main.py --mode demo --best_ppo_1
+python main.py --mode demo --load_model best_ppo_1
 ```
 
 ## 学習結果
