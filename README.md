@@ -1,6 +1,5 @@
 # 深層強化学習Summer2025最終課題
 
-![Grad-CAM Visualization](https://i.imgur.com/your-image-url.gif)
 ## 概要
 
 このプロジェクトでは、深層強化学習アルゴリズム **PPO (Proximal Policy Optimization)** を用いて、Gymnasiumの**CarRacing-v3**環境を攻略するエージェントを学習させます。
@@ -16,7 +15,6 @@
 * Python 3.10
 * PyTorch
 * Gymnasium
-* OpenCV
 
 詳細なライブラリは`requirements.txt`を参照してください。
 
