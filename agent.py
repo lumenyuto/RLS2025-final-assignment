@@ -60,7 +60,7 @@ class PPO(Algorithm):
     def __init__(self, state_shape, action_shape, device, seed=0,
                  batch_size=256, gamma=0.99, lr=3e-5,
                  rollout_length=2048, num_updates=10, clip_eps=0.2, lambd=0.95,
-                 coef_ent=0.01, max_grad_norm=0.5, reward_scaling=True):
+                 coef_ent=0.01, max_grad_norm=0.5):
         super().__init__()
         torch.manual_seed(seed)
         if device.type == 'cuda': torch.cuda.manual_seed(seed)
@@ -86,8 +86,6 @@ class PPO(Algorithm):
         self.coef_ent = coef_ent
         self.max_grad_norm = max_grad_norm
         self.reward_scaling=reward_scaling
-        if self.reward_scaling:
-            self.reward_rms = RunningMeanStd(shape=(1,))
 
         self.off_course_threshold = 100
         self.off_course_counter = 0
@@ -139,21 +137,13 @@ class PPO(Algorithm):
         states, actions, rewards, dones, log_pis_old = self.buffer.get()
         processed_states = states.float().permute(0, 3, 1, 2) / 255.0
 
-        if self.reward_scaling:
-            self.reward_rms.update(rewards.cpu().numpy())
-
-            scaled_rewards = rewards / torch.sqrt(torch.tensor(self.reward_rms.var, device=self.device, dtype=torch.float32) + 1e-8)
-            scaled_rewards = torch.clamp(scaled_rewards, -10.0, 10.0)
-        else:
-            scaled_rewards = rewards
-
         with torch.no_grad():
             features = self.cnn(processed_states)
             values = self.critic(features)
             next_features = self.cnn(torch.roll(processed_states, -1, 0))
             next_values = self.critic(next_features)
 
-        targets, advantages = calculate_advantage(values, scaled_rewards, dones, next_values, self.gamma, self.lambd)
+        targets, advantages = calculate_advantage(values, rewards, dones, next_values, self.gamma, self.lambd)
 
         for _ in range(self.num_updates):
             indices = np.random.permutation(self.rollout_length)
@@ -161,10 +151,8 @@ class PPO(Algorithm):
                 idx = indices[start:start+self.batch_size]
                 features_batch = self.cnn(processed_states[idx])
 
-                # Critic損失
                 loss_critic = (self.critic(features_batch) - targets[idx]).pow(2).mean()
 
-                # Actor損失
                 log_pis = evaluate_lop_pi(self.actor.fc(features_batch), self.actor.log_stds, actions[idx])
                 mean_entropy = -log_pis.mean()
                 ratios = (log_pis - log_pis_old[idx]).exp()
@@ -172,7 +160,6 @@ class PPO(Algorithm):
                 loss_actor2 = -torch.clamp(ratios, 1.0 - self.clip_eps, 1.0 + self.clip_eps) * advantages[idx]
                 loss_actor = torch.max(loss_actor1, loss_actor2).mean() - self.coef_ent * mean_entropy
 
-                # 合計損失
                 total_loss = loss_actor + 0.5 * loss_critic
 
                 self.optim.zero_grad()
@@ -183,7 +170,6 @@ class PPO(Algorithm):
                 self.optim.step()
 
     def save_models(self, save_dir):
-        """モデルの重みを保存する"""
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
         torch.save(self.cnn.state_dict(), os.path.join(save_dir, 'cnn.pth'))
@@ -192,7 +178,6 @@ class PPO(Algorithm):
         print(f"モデルを {save_dir} に保存しました。")
 
     def load_models(self, load_dir):
-        """モデルの重みを読み込む"""
         self.cnn.load_state_dict(torch.load(os.path.join(load_dir, 'cnn.pth')))
         self.actor.load_state_dict(torch.load(os.path.join(load_dir, 'actor.pth')))
         self.critic.load_state_dict(torch.load(os.path.join(load_dir, 'critic.pth')))
