@@ -51,9 +51,11 @@ python main.py --mode demo --model_dir best_ppo_2
 ```
 
 ## 学習結果
-
-### 学習曲線
+### 1.学習曲線（報酬関数のclipping無し）
 ![学習曲線](https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/images/best_ppo_1.png?raw=true)
+
+### 2.学習曲線（報酬関数のclipping有り）
+![学習曲線](https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/images/best_ppo_2.png?raw=true)
 
 ### エージェントの走行動画
 
