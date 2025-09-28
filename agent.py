@@ -69,7 +69,6 @@ class PPO(Algorithm):
         self.buffer = RolloutBuffer(rollout_length, state_shape, action_shape, device)
         self.device = device
 
-        # モデルの構築
         dummy_state = torch.zeros(1, state_shape[2], state_shape[0], state_shape[1], device=device)
         self.cnn = CNN(input_channels=state_shape[2]).to(device)
         cnn_output_dim = self.cnn(dummy_state).shape[-1]
@@ -85,7 +84,6 @@ class PPO(Algorithm):
         self.lambd = lambd
         self.coef_ent = coef_ent
         self.max_grad_norm = max_grad_norm
-        self.reward_scaling=reward_scaling
 
         self.off_course_threshold = 100
         self.off_course_counter = 0
