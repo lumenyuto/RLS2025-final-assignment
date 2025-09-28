@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from utils import reparameterize # utils.pyからインポート
+from utils import reparameterize
 
 class CNN(nn.Module):
     def __init__(self, input_channels=3):
