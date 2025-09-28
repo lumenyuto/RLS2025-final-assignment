@@ -55,13 +55,9 @@ python main.py --mode demo --model_dir 'model_ppo'
 
 ### エージェントの走行動画
 
-（ここに`trainer.visualize()`で生成した動画のGIFを貼り付け）
 
-## 考察：エージェントはどこを見ているか？
+## 考察
 
-Grad-CAMによる可視化結果から、エージェントは以下のような特徴を持っていることが示唆されました。
-
-* 
 
 
 
