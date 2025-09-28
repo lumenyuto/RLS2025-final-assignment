@@ -48,14 +48,6 @@ python main.py --mode train
 python main.py --mode demo --model_dir 'model_ppo'
 ```
 
-### 3. Grad-CAMによる可視化
-
-エージェントの判断根拠をGrad-CAMで可視化します。
-
-```bash
-python visualize_cam.py --model_dir 'model_ppo'
-```
-
 ## 学習結果
 
 ### 学習曲線
