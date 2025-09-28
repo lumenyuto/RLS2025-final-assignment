@@ -61,7 +61,7 @@ python visualize_cam.py --model_dir 'model_ppo'
 
 ### 学習曲線
 
-（ここに`trainer.plot()`で生成した学習曲線の画像を貼り付け）
+（https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/best_ppo_3.png）
 
 ### エージェントの走行動画
 
