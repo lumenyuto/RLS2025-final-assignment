@@ -2,12 +2,10 @@ import argparse
 import torch
 import gymnasium as gym
 
-# --- 他のファイルから必要なクラスをインポート ---
 from agent import PPO
 from trainer import Trainer
 
 def main():
-    # コマンドライン引数の設定
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', default='train', type=str, help='train or demo')
     parser.add_argument('--model_dir', default='model_ppo', type=str, help='directory to save/load model')
@@ -28,7 +26,6 @@ def main():
     )
 
     if args.mode == 'train':
-        # Trainerのインスタンスを作成して学習を開始
         trainer = Trainer(
             env=env,
             env_test=env_test,
@@ -42,7 +39,6 @@ def main():
         trainer.plot()
 
     elif args.mode == 'demo':
-        # 学習済みモデルをロードしてデモを実行
         algo.load_models(args.model_dir)
         video_folder = "demo_videos"
         env_demo = RecordVideo(env, video_folder, episode_trigger=lambda e: True)
