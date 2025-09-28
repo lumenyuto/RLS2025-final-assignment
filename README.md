@@ -18,8 +18,8 @@
 
 1.  リポジトリをクローンします。
     ```bash
-    git clone https://github.com/lumenyuto/RLs2025-final-assignment
-    cd RLs2025-final-assignment
+    git clone https://github.com/lumenyuto/RLS2025-final-assignment
+    cd RLS2025-final-assignment
     ```
 
 2.  必要なライブラリをインストールします。
