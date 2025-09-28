@@ -4,4 +4,71 @@
 - ハイパーパラメータや報酬関数の調整により、完璧な走りではないものの、スコア900超え（コースを1周完走できる程度の性能）のモデルを作成することに成功しました。
 - 学習の安定化を目指して、価値関数のclippingや報酬の正規化、学習率のアニーリングなどにも取り組みました。
 
+## 動作環境
+
+* Python 3.8+
+* PyTorch
+* Gymnasium
+* OpenCV
+
+詳細なライブラリは`requirements.txt`を参照してください。
+
+## セットアップ
+
+1.  リポジトリをクローンします。
+    ```bash
+    git clone [https://github.com/your-username/PPO-CarRacing-GradCAM.git](https://github.com/your-username/PPO-CarRacing-GradCAM.git)
+    cd PPO-CarRacing-GradCAM
+    ```
+
+2.  必要なライブラリをインストールします。
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## 使い方
+
+### 1. エージェントの学習
+
+以下のコマンドで学習を開始します。学習済みモデルは`model_ppo`ディレクトリに保存されます。
+
+```bash
+python main.py --mode train
+```
+
+### 2. 学習済みエージェントのデモ
+
+学習済みの重みを使って、エージェントの走行を動画で確認します。
+
+```bash
+python main.py --mode demo --model_dir 'model_ppo'
+```
+
+### 3. Grad-CAMによる可視化
+
+エージェントの判断根拠をGrad-CAMで可視化します。
+
+```bash
+python visualize_cam.py --model_dir 'model_ppo'
+```
+
+## 学習結果
+
+### 学習曲線
+
+（ここに`trainer.plot()`で生成した学習曲線の画像を貼り付け）
+
+### エージェントの走行動画
+
+（ここに`trainer.visualize()`で生成した動画のGIFを貼り付け）
+
+## 考察：エージェントはどこを見ているか？
+
+Grad-CAMによる可視化結果から、エージェントは以下のような特徴を持っていることが示唆されました。
+
+* **カーブの手前**: これから曲がる方向のコースの先を見ている。
+* **直線**: コースの遠方を見据えている。
+* **障害物（芝生）**: コース外の領域にも注意を払い、避けるような挙動が見られる。
+
+これは、人間が運転する際の視点と非常に似ており、エージェントが適切な特徴を捉えて運転していることを示しています。
 
