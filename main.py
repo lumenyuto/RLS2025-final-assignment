@@ -1,0 +1,61 @@
+import argparse
+import torch
+import gymnasium as gym
+
+# --- 他のファイルから必要なクラスをインポート ---
+from agent import PPO
+from trainer import Trainer
+
+def main():
+    # コマンドライン引数の設定
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--mode', default='train', type=str, help='train or demo')
+    parser.add_argument('--model_dir', default='model_ppo', type=str, help='directory to save/load model')
+    parser.add_argument('--seed', default=0, type=int)
+    parser.add_argument('--num_steps', default=5*10**5, type=int)
+    parser.add_argument('--eval_interval', default=2048, type=int)
+    args = parser.parse_args()
+
+    env = gym.make('CarRacing-v3', render_mode='rgb_array', max_episode_steps=1000)
+    env_test = gym.make('CarRacing-v3', render_mode='rgb_array', max_episode_steps=1000)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    algo = PPO(
+        state_shape=env.observation_space.shape,
+        action_shape=env.action_space.shape,
+        seed=args.seed,
+        device=device
+    )
+
+    if args.mode == 'train':
+        # Trainerのインスタンスを作成して学習を開始
+        trainer = Trainer(
+            env=env,
+            env_test=env_test,
+            algo=algo,
+            seed=args.seed,
+            num_steps=args.num_steps,
+            eval_interval=args.eval_interval,
+            model_dir=args.model_dir
+        )
+        trainer.train()
+        trainer.plot()
+
+    elif args.mode == 'demo':
+        # 学習済みモデルをロードしてデモを実行
+        algo.load_models(args.model_dir)
+        video_folder = "demo_videos"
+        env_demo = RecordVideo(env, video_folder, episode_trigger=lambda e: True)
+        state, _ = env_demo.reset(seed=args.seed)
+        done = False
+        while not done:
+            action = algo.exploit(state)
+            state, _, terminated, truncated, _ = env_demo.step(action)
+            done = terminated or truncated
+        env_demo.close()
+
+    env.close()
+    env_test.close()
+
+if __name__ == '__main__':
+    main()
