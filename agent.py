@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from torch import nn
 
-from models import CNN, PPOActor, PPOCritic
+from model import CNN, PPOActor, PPOCritic
 from utils import preprocess_state, RunningMeanStd, evaluate_lop_pi
 
 def calculate_advantage(values, rewards, dones, next_values, gamma=0.995, lambd=0.997):
