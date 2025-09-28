@@ -18,7 +18,7 @@
 
 1.  リポジトリをクローンします。
     ```bash
-    git clone [https://github.com/lumenyuto/RLs2025-final-assignment.git](https://github.com/lumenyuto/RLs2025-final-assignment.git)
+    git clone https://github.com/lumenyuto/RLs2025-final-assignment
     cd RLs2025-final-assignment
     ```
 
