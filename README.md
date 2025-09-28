@@ -22,8 +22,8 @@
 
 1.  リポジトリをクローンします。
     ```bash
-    git clone [https://github.com/lumenyuto/CarRacing-PPO.git](https://github.com/lumenyuto/CarRacing-PPO.git)
-    cd PPO-CarRacing-GradCAM
+    git clone [https://github.com/lumenyuto/Carracing-PPO.git](https://github.com/lumenyuto/Carracing-PPO.git)
+    cd Carracing-PPO
     ```
 
 2.  必要なライブラリをインストールします。
