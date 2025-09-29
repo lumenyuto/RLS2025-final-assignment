@@ -60,7 +60,7 @@ class PPO(Algorithm):
     def __init__(self, state_shape, action_shape, device, seed=0,
                  batch_size=256, gamma=0.99, lr=3e-5,
                  rollout_length=2048, num_updates=10, clip_eps=0.2, lambd=0.95,
-                 coef_ent=0.01, max_grad_norm=0.5):
+                 coef_ent=0.01, max_grad_norm=0.5, value_clipping=False):
         super().__init__()
         torch.manual_seed(seed)
         if device.type == 'cuda': torch.cuda.manual_seed(seed)
@@ -87,6 +87,8 @@ class PPO(Algorithm):
 
         self.off_course_threshold = 100
         self.off_course_counter = 0
+
+        self.value_clipping=value_clipping
 
 
     def explore(self, state):
@@ -135,7 +137,7 @@ class PPO(Algorithm):
         states, actions, rewards, dones, log_pis_old = self.buffer.get()
         processed_states = states.float().permute(0, 3, 1, 2) / 255.0
 
-        with torch.no_grad():
+        with torch.no_grad():   
             features = self.cnn(processed_states)
             values = self.critic(features)
             next_features = self.cnn(torch.roll(processed_states, -1, 0))
@@ -149,7 +151,18 @@ class PPO(Algorithm):
                 idx = indices[start:start+self.batch_size]
                 features_batch = self.cnn(processed_states[idx])
 
-                loss_critic = (self.critic(features_batch) - targets[idx]).pow(2).mean()
+                values_new_batch = self.critic(features_batch)
+                values_old_batch = values[idx]
+
+                values_clipped = values_old_batch + torch.clamp(values_new_batch - values_old_batch,  -self.clip_eps, self.clip_eps)
+
+                if self.value_clipping:
+                    loss_critic_unclipped = (values_new_batch - targets[idx]).pow(2)
+                    loss_critic_clipped = (values_clipped - targets[idx]).pow(2)
+                    loss_critic = 0.5 * torch.max(loss_critic_unclipped, loss_critic_clipped).mean()
+                    
+                else:
+                    loss_critic = (self.critic(features_batch) - targets[idx]).pow(2).mean()
 
                 log_pis = evaluate_lop_pi(self.actor.fc(features_batch), self.actor.log_stds, actions[idx])
                 mean_entropy = -log_pis.mean()
