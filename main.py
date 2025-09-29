@@ -9,7 +9,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', default='train', type=str, help='train or demo')
     parser.add_argument('--model_dir', default='best_ppo', type=str, help='directory to save/load model')
-    parser.add_argument('--seed', default=0, type=int)
+    parser.add_argument('--seed', default=1, type=int)
     parser.add_argument('--num_steps', default=5*10**5, type=int)
     parser.add_argument('--eval_interval', default=2048, type=int)
     parser.add_argument('--value_clipping', action='store_true', help='Enable reward clipping')
