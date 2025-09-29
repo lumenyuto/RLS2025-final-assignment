@@ -33,7 +33,6 @@
 
 以下のコマンドで学習を開始します。学習済みモデルは`model_ppo`ディレクトリに保存されます。
 - 価値関数のclipping無し
-
 ```bash
 python main.py --mode train 
 ```
@@ -43,8 +42,13 @@ python main.py --mode train --value_clipping
 ```
 ### 2. 学習済みエージェントのデモ
 学習済みモデルの重みを使って、Agentの走行を動画で確認します。
+- 価値関数のclipping無し
 ```bash
-python main.py --mode demo --model_dir best_ppo
+python main.py --mode demo
+```
+- 価値関数のclipping有り
+```bash
+python main.py --mode demo --value_clipping
 ```
 
 ### 3. 事前学習済みエージェントのデモ
