@@ -71,11 +71,6 @@ python main.py --mode demo --model_dir best_ppo_2
 ### 2.学習曲線（価値関数のclipping有り）
 ![学習曲線](https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/images/best_ppo_2.png?raw=true)
 
-### エージェントの走行動画
-
-
-## 考察
-
 
 
 
