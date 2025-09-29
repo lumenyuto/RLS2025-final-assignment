@@ -29,13 +29,19 @@
 
 ## 使い方
 
-### 1. エージェントの学習
+### 1. Agentの学習
 
 以下のコマンドで学習を開始します。学習済みモデルは`model_ppo`ディレクトリに保存されます。
+- 報酬のclipping無し
 
 ```bash
-python main.py --mode train
+python main.py --mode train 
 ```
+- 報酬のclipping有り
+```bash
+python main.py --mode train --value_clipping
+```
+
 
 ### 2. 学習済みエージェントのデモ
 
