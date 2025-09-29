@@ -37,7 +37,7 @@
 ```bash
 python main.py --mode train 
 ```
-- 報酬のclipping有り
+- 価値関数のclipping有り
 ```bash
 python main.py --mode train --value_clipping
 ```
@@ -46,21 +46,21 @@ python main.py --mode train --value_clipping
 ### 2. 学習済みエージェントのデモ
 
 学習済みの重みを使って、エージェントの走行を動画で確認します。
-- 報酬関数のclipping無し
+- 価値関数のclipping無し
 ```bash
 python main.py --mode demo --model_dir best_ppo_1
 ```
 
-- 報酬関数のclipping有り
+- 価値関数のclipping有り
 ```bash
 python main.py --mode demo --model_dir best_ppo_2
 ```
 
 ## 学習結果
-### 1.学習曲線（報酬関数のclipping無し）
+### 1.学習曲線（価値関数のclipping無し）
 ![学習曲線](https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/images/best_ppo_1.png?raw=true)
 
-### 2.学習曲線（報酬関数のclipping有り）
+### 2.学習曲線（価値関数のclipping有り）
 ![学習曲線](https://github.com/lumenyuto/RLs2025-final-assignment/blob/main/images/best_ppo_2.png?raw=true)
 
 ### エージェントの走行動画
