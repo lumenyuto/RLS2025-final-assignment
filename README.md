@@ -41,11 +41,15 @@ python main.py --mode train
 ```bash
 python main.py --mode train --value_clipping
 ```
-
-
 ### 2. 学習済みエージェントのデモ
+学習済みモデルの重みを使って、Agentの走行を動画で確認します。
+```bash
+python main.py --mode demo --model_dir best_ppo
+```
 
-学習済みの重みを使って、エージェントの走行を動画で確認します。
+### 3. 事前学習済みエージェントのデモ
+
+事前学習済みの重みを使って、エージェントの走行を動画で確認します。
 - 価値関数のclipping無し
 ```bash
 python main.py --mode demo --model_dir best_ppo_1
