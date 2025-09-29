@@ -40,7 +40,7 @@ python main.py --mode train
 ```bash
 python main.py --mode train --value_clipping
 ```
-### 2. 学習済みエージェントのデモ
+### 2. 学習済みAgentのデモ
 学習済みモデルの重みを使って、Agentの走行を動画で確認します。
 - 価値関数のclipping無し
 ```bash
