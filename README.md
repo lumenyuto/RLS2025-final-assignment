@@ -32,7 +32,7 @@
 ### 1. Agentの学習
 
 以下のコマンドで学習を開始します。学習済みモデルは`model_ppo`ディレクトリに保存されます。
-- 報酬のclipping無し
+- 価値関数のclipping無し
 
 ```bash
 python main.py --mode train 
