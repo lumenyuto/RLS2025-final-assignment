@@ -51,9 +51,9 @@ python main.py --mode demo
 python main.py --mode demo --value_clipping
 ```
 
-### 3. 事前学習済みエージェントのデモ
+### 3. 事前学習済みAgentのデモ
 
-事前学習済みの重みを使って、エージェントの走行を動画で確認します。
+事前学習済みの重みを使って、Agentの走行を動画で確認します。
 - 価値関数のclipping無し
 ```bash
 python main.py --mode demo --model_dir best_ppo_1
