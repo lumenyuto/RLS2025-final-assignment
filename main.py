@@ -12,17 +12,19 @@ def main():
     parser.add_argument('--seed', default=0, type=int)
     parser.add_argument('--num_steps', default=5*10**5, type=int)
     parser.add_argument('--eval_interval', default=2048, type=int)
+    parser.add_argument('--value_clipping', action='store_true', help='Enable reward clipping')
     args = parser.parse_args()
 
     env = gym.make('CarRacing-v3', render_mode='rgb_array', max_episode_steps=1000)
     env_test = gym.make('CarRacing-v3', render_mode='rgb_array', max_episode_steps=1000)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+        
     algo = PPO(
         state_shape=env.observation_space.shape,
         action_shape=env.action_space.shape,
         seed=args.seed,
-        device=device
+        device=device,
+        reward_clipping=args.value_clipping
     )
 
     if args.mode == 'train':
