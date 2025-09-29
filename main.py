@@ -15,6 +15,9 @@ def main():
     parser.add_argument('--value_clipping', action='store_true', help='Enable reward clipping')
     args = parser.parse_args()
 
+    suffix ='_value_clipping' if args.value_clipping else ''
+    model_dir = f'{args.model_dir}{suffix}'
+
     env = gym.make('CarRacing-v3', render_mode='rgb_array', max_episode_steps=1000)
     env_test = gym.make('CarRacing-v3', render_mode='rgb_array', max_episode_steps=1000)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -24,7 +27,7 @@ def main():
         action_shape=env.action_space.shape,
         seed=args.seed,
         device=device,
-        reward_clipping=args.value_clipping
+        value_clipping=args.value_clipping
     )
 
     if args.mode == 'train':
@@ -35,13 +38,13 @@ def main():
             seed=args.seed,
             num_steps=args.num_steps,
             eval_interval=args.eval_interval,
-            model_dir=args.model_dir
+            model_dir=model_dir
         )
         trainer.train()
         trainer.plot()
 
     elif args.mode == 'demo':
-        algo.load_models(args.model_dir)
+        algo.load_models(model_dir)
         video_folder = "demo_videos"
         env_demo = RecordVideo(env, video_folder, episode_trigger=lambda e: True)
         state, _ = env_demo.reset(seed=args.seed)
