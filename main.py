@@ -9,7 +9,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', default='train', type=str, help='train or demo')
     parser.add_argument('--model_dir', default='best_ppo', type=str, help='directory to save/load model')
-    parser.add_argument('--seed', default=1, type=int)
+    parser.add_argument('--seed', default=0, type=int)
     parser.add_argument('--num_steps', default=5*10**5, type=int)
     parser.add_argument('--eval_interval', default=2048, type=int)
     parser.add_argument('--value_clipping', action='store_true', help='Enable reward clipping')
@@ -47,7 +47,7 @@ def main():
         algo.load_models(model_dir)
         video_folder = "demo_videos"
         env_demo = RecordVideo(env, video_folder, episode_trigger=lambda e: True)
-        state, _ = env_demo.reset(seed=args.seed)
+        state, _ = env_demo.reset(seed=1)
         done = False
         while not done:
             action = algo.exploit(state)
